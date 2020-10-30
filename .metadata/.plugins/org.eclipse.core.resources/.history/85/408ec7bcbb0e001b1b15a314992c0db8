@@ -1,0 +1,51 @@
+package learnGraph;
+import java.util.*;
+/**
+ * 寻找有向环
+ * @author guo
+ *
+ */
+public class DirectedCycle {
+	private boolean[] marked;
+	private int[] from;
+	private Stack<Integer> cycle;
+	private boolean[] onStack;
+	
+	public DirectedCycle(DirectedGraph g) {
+		super();
+		this.marked = new boolean[g.V()];
+		this.from = new int[g.V()];
+		this.onStack = new boolean[g.V()];
+		for(int i=0;i<g.V();i++)
+			dfs(g, i);
+	}
+
+	private void dfs(DirectedGraph g, int i) {
+		marked[i] = true;
+		onStack[i] = true;
+		if(hasCycle()) return;
+		for(int d:g.iterator(i)) {
+			if(!marked[d]) {
+				from[d] = i;
+				dfs(g, d);
+			}else if(onStack[d]) {
+				cycle = new Stack<>();
+				for(int j=i;j!=d;j=from[j]) {
+					cycle.push(j);
+				}
+				cycle.push(d);
+				cycle.push(i);		
+			}
+		}
+		onStack[i] = false;
+		
+	}
+	
+	public boolean hasCycle() {
+		return cycle!=null;
+	}
+	
+	public Iterable<Integer> cycle(){
+		return cycle;
+	}
+}

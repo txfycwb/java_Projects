@@ -1,0 +1,103 @@
+package learnSort;
+import java.util.*;
+/**
+ * 排序的模板
+ * @author guo
+ *
+ */
+public class BasicSort {
+	//数组排序的基本操作
+	public static void sort(Comparable[] a) {
+		
+	}
+	
+	public static boolean less(Comparable a, Comparable b) {
+		return a.compareTo(b) < 0;
+	}
+
+	public static void exch(Comparable[] a, int i, int j) {
+		Comparable temp =  a[i];
+		a[i] = a[j];
+		a[j] = temp;
+	}
+	
+	public static void show(Comparable[] a) {
+		StringBuffer out = new StringBuffer();
+		for(Comparable t:a) {
+			out.append(t.toString()).append("->");
+		}
+		System.out.println(out.toString());
+	}
+	
+	public static boolean isSorted(Comparable[] a) {
+		for(int i=0;i<a.length-1;i++) {
+			if(!less(a[i], a[i+1])) {
+				return false;
+			}
+		}
+		return true;
+		
+	}
+	
+	public static void main(String[] args) {
+		List<String> l = new ArrayList<>();
+		for(int i=0;i<26;i++) {
+			l.add(new String((char)('a'+i)+""));
+		}
+		l.add("ba");
+		l.add("bc");
+		Collections.shuffle(l);
+		String[] t = l.toArray(new String[26]);
+		show(t);
+		System.out.println("排序后：");
+		//Selection.sort(t);
+		Insertion.sort(t);
+		show(t);
+	}
+}
+
+class Selection{
+	//选择排序,升序
+	public static void sort(Comparable[] a) {
+		for(int i=0;i<a.length-1;i++) {
+			int maxIndex = a.length-1-i;
+			int biggestIndex = maxIndex;
+			for(int j=0;j<maxIndex;j++) {
+				if(BasicSort.less(a[biggestIndex], a[j])) {
+					biggestIndex = j;
+				}
+			}
+			BasicSort.exch(a, maxIndex, biggestIndex);
+		}
+	}
+}
+
+class Insertion{
+	//插入排序，适合部分有序的数组，最坏情况N^2/2次比较与交换
+	public static void sort(Comparable[] a) {
+		for(int i=1;i<a.length;i++) {
+			for(int j=i;j>0 && BasicSort.less(a[j], a[j-1]);j--) {
+				BasicSort.exch(a, j, j-1);
+			}
+		}
+	}
+}
+
+class Shell{
+	//希尔排序，基于插入排序的快速排序，主要应对大规模的乱序数组，逐步形成部分间隔有序
+	//不知道用什么，就用希尔排序
+	public static void sort(Comparable[] a) {
+		int N = a.length;
+		int h = 1;
+		while(h<N/3) {
+			h = 3*h+1;
+		}
+		while(h>=1) {
+			for(int i=h;i<N;i++) {
+				for(int j=i;j>=h && BasicSort.less(a[j], a[j-h]);j -= h) {
+					BasicSort.exch(a, j, j-h);
+				}
+			}
+		}
+	}
+}

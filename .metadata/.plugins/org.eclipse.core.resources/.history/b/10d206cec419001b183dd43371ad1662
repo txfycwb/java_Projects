@@ -1,0 +1,50 @@
+package jdbc;
+import java.sql.*;
+
+/**
+ * 根据id返回一个Student对象
+ * @author guo
+ *
+ */
+public class TestORM {
+	static String JDBC_URL = "jdbc:mysql://localhost:3306/learnjdbc?useSSL=false";
+	static String JDBC_USER = "learnjdbc";
+	static String PASSWORD = "learnpassword";
+	
+	public static void main(String[] args) {
+		
+		
+	}
+	
+	public static Student get(int id) throws SQLException {
+		Student student = null;
+		try(Connection conn = DriverManager.getConnection(JDBC_URL,JDBC_USER,PASSWORD);
+			PreparedStatement ps = conn.prepareStatement("SELECT name,grade,gender,score FROM students WHERE id =?")){
+			ps.setInt(1,id);
+			try(ResultSet rs = ps.executeQuery()){
+				while(rs.next()) {
+					student = new Student(rs.getString(1),rs.getInt(2),rs.getInt(3),rs.getInt(4));
+				}
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return student;
+	}
+ 
+}
+
+class Student{
+	String name;
+	int grade;
+	int gender;
+	int score;
+	int id;
+	public Student(String name, int grade, int gender, int score) {
+		super();
+		this.name = name;
+		this.grade = grade;
+		this.gender = gender;
+		this.score = score;
+	}
+}

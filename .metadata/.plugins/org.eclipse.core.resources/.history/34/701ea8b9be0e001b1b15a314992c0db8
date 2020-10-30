@@ -1,0 +1,28 @@
+package learnGraph;
+import java.util.*;
+import learnGraph.*;
+/**
+ * 拓扑排序即为dfs的逆后序
+ * @author guo
+ *
+ */
+public class Toplogical {
+
+}
+
+class DepthFirstOrder{
+	private boolean[] marked;
+	private Queue<Integer> pre;
+	private Queue<Integer> post;
+	private Stack<Integer> reversePost;
+	
+	public DepthFirstOrder(DirectedGraph g) {
+		super();
+		if(new DirectedCycle(g).hasCycle()) 
+		this.pre = pre;
+		this.post = post;
+		this.reversePost = reversePost;
+	}
+	
+	
+}

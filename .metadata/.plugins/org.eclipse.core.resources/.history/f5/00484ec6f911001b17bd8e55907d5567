@@ -1,0 +1,24 @@
+package learnGraph;
+
+import java.util.PriorityQueue;
+import learnGraph.*;
+/**
+ * 适用于无负值的加权有向图
+ */
+public class DijkstraSp {
+	private PriorityQueue<Integer> pq;
+	private double[] distTo;
+	private DiEdge[] edgeTo;
+	
+	public DijkstraSp(EdgeWeightedDiGraph g) {
+		distTo = new double[g.V()];
+		edgeTo = new DiEdge[g.V()];
+	}
+	
+	private void relax(EdgeWeightedDiGraph g, int s) {
+		for(DiEdge t:g.iterator(s)) {
+			int to = t.to();
+			
+		}
+	}
+}

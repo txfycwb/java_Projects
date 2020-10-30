@@ -1,0 +1,75 @@
+package jdbc;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+//!!!!!小心注入攻击
+public class TestJDBC {
+	static String JDBC_URL = "jdbc:mysql://localhost:3306/learnjdbc";
+	static String JDBC_USER = "learnjdbc";
+	static String PASSWORD = "learnpassword";
+	
+	public static void main(String[] args) throws SQLException {
+		// 建立与数据库的Connection连接
+        // 这里需要提供：
+        // 数据库所处于的ip:127.0.0.1 (本机)
+        // 数据库的端口号： 3306 （mysql专用端口号）
+        // 数据库名称 learnjdbc
+        // 编码方式 UTF-8
+        // 账号 learnjdbc
+        // 密码 learnpassword
+		insert();
+		query();
+		
+		
+			
+	}
+	
+	static void query() throws SQLException{
+		try (Connection conn = DriverManager.getConnection(JDBC_URL,JDBC_USER,PASSWORD)){
+            //statement有注入攻击的危险，使用Java对数据库进行操作时，
+			//必须使用PreparedStatement，严禁任何通过参数拼字符串的代码！
+			try(Statement stmt = conn.createStatement()){
+            	try(ResultSet rs = stmt.executeQuery("SELECT id,grade,name,gender FROM students WHERE gender=1")){
+            		while(rs.next()) {
+            			//注意按照查找顺序来,索引从一开始
+            			long id = rs.getLong(1);
+            			long grade = rs.getLong(2);
+            			String name = rs.getString(3);
+            			int gender = rs.getInt(4);
+            			System.out.println(id+" "+grade+""+name+" "+gender);
+            		}
+            	}
+            }
+			System.out.println();
+			try(PreparedStatement ps = conn.prepareStatement("SELECT id,grade,name,gender FROM students WHERE gender=? And grade<?")){
+				ps.setObject(1, 1);
+				ps.setObject(2,3);
+				try(ResultSet rs = ps.executeQuery()){
+					while(rs.next()) {
+            			//使用string的列名要易读，且不容易出错。
+						long id = rs.getLong("id");
+		                long grade = rs.getLong("grade");
+		                String name = rs.getString("name");
+		                String gender = rs.getString("gender");
+            			System.out.println(id+" "+grade+""+name+" "+gender);
+            		}
+				}
+			}
+		}
+	}
+
+	static void insert() throws SQLException{
+		try(Connection conn = DriverManager.getConnection(JDBC_URL,JDBC_USER,PASSWORD),
+			PrepareStatement ps = conn.prepareStatement(
+			"INSER INTO students(grade,name,gender) VALUES (?,?,?)")){
+			ps.setObject(1,2);
+			ps.setObject(2,"Bob");
+			ps.setObject(3,1);
+			System.out.println(ps.executeUpdate());
+		}
+	}
+}

@@ -1,0 +1,31 @@
+package learnbasic.LearnTime;
+import java.util.*;
+/**
+ * 练习遗留的旧API：java.util中的Date、Calendar和TimeZone类
+ * @author guo
+ *
+ */
+public class OldAPI {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		date();
+	}
+	
+	
+	public static void date() {
+		// 练习Date类的用法
+		// 获取当前时间:
+        Date date = new Date();
+        System.out.println(date.getYear() + 1900); // 必须加上1900
+        System.out.println(date.getMonth() + 1); // 0~11，必须加上1
+        System.out.println(date.getDate()); // 1~31，不能加1
+        // 转换为String:
+        System.out.println(date.toString());
+        // 转换为GMT时区:
+        System.out.println(date.toGMTString());
+        // 转换为本地时区:
+        System.out.println(date.toLocaleString());
+	}
+
+}

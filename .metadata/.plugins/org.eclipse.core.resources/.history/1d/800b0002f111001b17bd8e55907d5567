@@ -1,0 +1,37 @@
+package learnGraph;
+/**
+ * 将所有边升序排列，每次加入最小边，保证在子树中不生成环，直到树中有V-1条边。
+ * @author guo
+ *
+ */
+import java.util.*;
+import learnGraph.*;
+
+public class KruskalMST {
+	private PriorityQueue<DiEdge> pq;
+	private int[] uf;
+	private List<Edge> mst;
+	public KruskalMST(EdgeWeightedGraph g) {
+		super();
+		this.pq = new PriorityQueue<DiEdge>();
+		this.uf = new int[g.V()];
+		for(int i = 0;i<g.V();i++)
+			uf[i] = i;
+		mst = new LinkedList<>();
+		for(DiEdge e:g.edges())
+			pq.add(e);
+		while(!pq.isEmpty()&&mst.size()<g.V()-1) {
+			DiEdge tempE = pq.poll();
+			int v = tempE.either();int w = tempE.other(v);
+			if(uf[v]==uf[w]) continue;
+			uf[v] = -1;
+			uf[w] = -1;
+			mst.add(tempE);
+		}
+	}
+	public Iterable<DiEdge> iterator(){
+		return this.mst;
+	}
+	
+	
+}

@@ -1,0 +1,28 @@
+package dataandtime;
+import java.util.time;
+/**
+ * Java标准库有两套处理日期和时间的API：
+ * 一套定义在java.util这个包里面，主要包括Date、Calendar和TimeZone这几个类；
+ * 一套新的API是在Java 8引入的，定义在java.time这个包里面，主要包括LocalDateTime、ZonedDateTime、ZoneId等。
+ * 
+ * “同一个时刻”在计算机中存储的本质上只是一个整数，我们称它为Epoch Time。
+ * 是计算从1970年1月1日零点（格林威治时区／GMT+00:00）到现在所经历的秒数.
+ * 在Java程序中，时间戳通常是用long表示的毫秒数.
+ * 要获取当前时间戳，可以使用System.currentTimeMillis()，这是Java程序获取时间戳最常用的方法。
+ * @author guo
+ *
+ */
+public class OldAPI {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+	
+	//java.util.Date是用于表示一个日期和时间的对象，注意与java.sql.Date区分，后者用在数据库中。
+	static void date() {
+		//获取当前时间
+		Date date = new Date();
+		
+	}
+}

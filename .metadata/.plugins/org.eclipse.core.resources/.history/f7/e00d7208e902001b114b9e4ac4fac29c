@@ -1,0 +1,14 @@
+package learnbasic.LearnTime;
+/**
+ * 练习遗留的旧API：java.util中的Date、Calendar和TimeZone类
+ * @author guo
+ *
+ */
+public class OldAPI {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

@@ -1,0 +1,14 @@
+package learnString;
+/**
+ * 首先根据所需要使用的字符构成字母表，使用字符索引数组：这样表示字符串时只需要使用索引，对于小字母表，效率更高。
+ * @author guo
+ *
+ */
+public class StringSort {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

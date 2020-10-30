@@ -1,0 +1,10 @@
+package learnbasic.learnio;
+
+public class BasicTry {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		System.out.println("相对路径解释均以用户工作目录开始"+System.getProperty("user.dir"));
+	}
+
+}

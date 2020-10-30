@@ -1,0 +1,3 @@
+This file is used to test java.io.
+本文件仅用于学习java.io的使用。
+￥#%@&*…… 

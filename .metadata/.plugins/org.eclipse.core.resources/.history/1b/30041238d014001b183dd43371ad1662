@@ -1,0 +1,74 @@
+package learnString;
+
+import java.util.*;
+
+/**
+ * 单词查找树：利用字符串的性质改造通用的查找算法。
+ * @author guo
+ * 查找命中时间与键长成正比；查找未命中只需检查若干个字符。
+ */
+public class StringST {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}
+/**
+	每个节点代表一个字母，有R（字母表大小）个子链接。
+	字符和键隐式地保存在数据结构中。
+ */
+class TrieST<Value>{
+	private static int R = 256;
+	private Node root;
+	private static class Node{
+		private Object val;
+		private Node[] next = new Node[R];
+	}
+	public Value get(String key) {
+		Node x = get(root,key,0);
+		if(x==null) return null;
+		return (Value) x.val;
+	}
+	private Node get(Node x, String key, int d) {
+		if(x==null) return null;
+		if(key.length()==d) return x;
+		return get(x.next[key.charAt(d)],key,d+1); 
+	}
+	
+	public void put(String key,Value val) {
+		root = put(root, key, val, 0);
+	}
+	private Node put(Node x, String key, Value val, int d) {
+		if(x==null) x = new Node();
+		if(d == key.length()) {
+			x.val = val;
+			return x;
+		}
+		x.next[key.charAt(d)] = put(x.next[key.charAt(d)],key,val,d+1);
+		return x;
+	}
+	public int size() {
+		return size(root);
+	}
+	private int size(Node x) {
+		int count=0;
+		if(x==null) return count;
+		if(x.val!=null) count++;
+		for(Node t:x.next)
+			if(t!=null) count+=size(t);
+		return count;
+	}
+	public Iterable<String> keys(){
+		return keysWithPrefix("");
+	}
+	public Iterable<String> keysWithPrefix(String pre) {
+		Queue<String> q = new LinkedList<String>();
+		collect(get(root,pre,0),pre,q);
+		return q;
+	}
+	private void collect(Node node, String pre, Queue<Integer> q) {
+		
+	}
+}

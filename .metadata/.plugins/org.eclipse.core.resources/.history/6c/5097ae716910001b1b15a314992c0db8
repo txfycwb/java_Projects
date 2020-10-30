@@ -1,0 +1,21 @@
+package learnGraph;
+/**
+ * prime算法的延迟实现、即时实现
+ * @author guo
+ *
+ */
+import java.util.*;
+import learnGraph.*;
+public class LazyPrimeMST {
+	private boolean[] marked;
+	private PriorityQueue<Edge> pq;
+	private LinkedList<Edge> mst;
+	public LazyPrimeMST(EdgeWeightedGraph g) {
+		super();
+		this.marked = new boolean[g.V()];
+		this.pq = new PriorityQueue<>();
+		this.mst = new LinkedList<>();
+		//默认是连通图
+	}
+	
+}

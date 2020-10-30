@@ -1,0 +1,69 @@
+package learnGraph;
+import java.util.Stack;
+
+import learnGraph.*;
+/**
+ * 寻找有向图g中的强连通分量：
+ * 1 得到g的逆图的逆后序
+ * 2 按照该逆后序对g进行dfs
+ * 3 按照对无向图cc的方法找强连通分量
+ * @author guo
+ * 证明：
+ * 1 证明强连通分量中的点一定能在dfs中访问
+ * 2 证明dfs中访问的点一定在强连通分量中。
+ */
+public class KosarajuSCC {
+	private int count;
+	private int[] id;
+	private boolean[] marked;
+	public KosarajuSCC(DirectedGraph g) {
+		super();
+		this.id = new int[g.V()];
+		this.marked = new boolean[g.V()];
+		Stack<Integer> s = (Stack<Integer>) new DepthFirstOrder(g.reverse()).reversePost();
+		while(!s.empty()) {
+			int t =s.pop();
+			if(!marked[t]){
+				dfs(g,t);
+				count++;
+			}	
+		}
+			
+		
+	}
+	private void dfs(DirectedGraph g, Integer s) {
+		marked[s] = true;
+		id[s] = count;
+		for(int i:g.iterator(s)) {
+			if(!marked[i]) {
+				dfs(g, i);
+			}
+		}
+	}
+	
+	public boolean stronglyConnected(int v,int w) {
+		return id[v] == id[w];
+	}
+	
+	public int id(int v) {
+		return id[v];
+	}
+	
+	public int count() {
+		return count;
+	}
+	public static void main(String[] args) {
+		DirectedGraph g =new DirectedGraph(13);
+		int[][] graph = new int[][] {
+			{0,1},{0,5},{2,0},{2,3},{3,2},{3,5},{4,2},{4,3},{5,4},{6,0},{6,4},{6,9},{7,6},
+			{7,8},{8,7},{8,9},{9,10},{9,11},{10,12},{11,4},{12,9},{11,12}
+		};
+		for(int[] t1:graph)
+			g.addEdge(t1[0], t1[1]);
+		System.out.print(g.toString());
+//		DepthFirstSearch dfs =new DepthFirstSearch(g, 0);
+//		System.out.print(dfs.count()+"*****"+dfs.marked(10));
+		System.out.print(new KosarajuSCC(g).count());
+	
+	}
+}

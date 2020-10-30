@@ -1,0 +1,18 @@
+package dataandtime;
+
+/**
+ * 
+ * “同一个时刻”在计算机中存储的本质上只是一个整数，我们称它为Epoch Time。
+ * 是计算从1970年1月1日零点（格林威治时区／GMT+00:00）到现在所经历的秒数.
+ * 
+ * @author guo
+ *
+ */
+public class OldAPI {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

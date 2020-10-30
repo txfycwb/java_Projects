@@ -1,0 +1,32 @@
+package jdbc;
+import java.sql.*;
+
+import javax.sql.DataSource;
+
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
+
+/**
+ * 为了避免频繁地创建和销毁JDBC连接，我们可以通过连接池（Connection Pool）复用已经创建好的连接。
+ * DBC连接池有一个标准的接口javax.sql.DataSource，注意这个类位于Java标准库中，但仅仅是接口。
+ * 目前使用最广泛的是HikariCP。
+ * @author guo
+ * 注意创建DataSource也是一个非常昂贵的操作，
+ * 所以通常DataSource实例总是作为一个全局变量存储，并贯穿整个应用程序的生命周期。
+ * 有了连接池以后，我们如何使用它呢？和前面的代码类似，只是获取Connection时，
+ * 把DriverManage.getConnection()改为ds.getConnection().
+ * 当我们调用conn.close()方法时（在try(resource){...}结束处），不
+ * 是真正“关闭”连接，而是释放到连接池中，以便下次获取连接时能直接返回
+ */
+public class TsetCP {
+	public static void main(String[] args) {
+		HikariConfig config = new HikariConfig();
+		config.setJdbcUrl("jdbc:mysql://localhost:3306/learnjdbc");
+		config.setUsername("learnjdbc");
+		config.setPassword("learnpassword");
+		config.addDataSourceProperty("connectionTimeout", "1000"); // 连接超时：1秒
+		config.addDataSourceProperty("idleTimeout", "60000"); // 空闲超时：60秒
+		config.addDataSourceProperty("maximumPoolSize", "10"); // 最大连接数：10
+		DataSource ds = new HikariDataSource(config);
+	}
+}

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;learnSort.Example&apos; to &apos;BasicSort&apos;&#x0D;&#x0A;- Original project: &apos;LearningAlgorithm&apos;&#x0D;&#x0A;- Original element: &apos;learnSort.Example&apos;&#x0D;&#x0A;- Renamed element: &apos;learnSort.BasicSort&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;Example&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;learnSort{Example.java[Example" matchStrategy="1" name="BasicSort" qualified="false" references="true" similarDeclarations="false" stamp="1601896060950" textual="false" version="1.0"/>
+</session>

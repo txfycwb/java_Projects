@@ -1,0 +1,74 @@
+package learnGraph;
+import java.math.BigDecimal;
+
+/**
+ * 加权无向图的数据结构及权重边的数据结构
+ * 主要关注其最小生成树
+ * 本数据结构只考虑最简单情况，详情见《算法》390页
+ */
+import learnGraph.*;
+public class EdgeWeightedGraph {
+	private Bag<Edge>[] adj;
+	private int V;
+	private int E;
+	
+	
+	public EdgeWeightedGraph(Bag<Edge>[] adj, int v, int e) {
+		super();
+		this.adj = adj;
+		V = v;
+		E = e;
+	}
+
+	public void addEdge(int v,int w) {
+		
+	}
+	
+	public static void main(String[] args) {
+
+	}
+
+}
+
+class Edge implements Comparable<Edge>{
+	private final int  v;
+	private final int  w;
+	private final double  weight;
+	
+	
+	public Edge(int v, int w, double weight) {
+		super();
+		this.v = v;
+		this.w = w;
+		this.weight = weight;
+	}
+
+	
+	public int either() {
+		return v;
+	}
+
+
+	public int other(int in) {
+		if(in==v) return w;
+		if(in==w) return v;
+		throw new RuntimeException("该点不在边中");
+	}
+
+
+	public double getWeight() {
+		return weight;
+	}
+
+
+	@Override
+	public int compareTo(Edge o) {
+		return BigDecimal.valueOf(getWeight()).compareTo(BigDecimal.valueOf(o.getWeight()));
+	}
+
+
+	@Override
+	public String toString() {
+		return this.v+"<-"+this.weight+"->"+this.w;
+	}
+}

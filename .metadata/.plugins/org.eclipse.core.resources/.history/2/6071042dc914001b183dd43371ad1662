@@ -1,0 +1,19 @@
+package learnString;
+
+/**
+ * 单词查找树：利用字符串的性质改造通用的查找算法。
+ * @author guo
+ * 查找命中时间与键长成正比；查找未命中只需检查若干个字符。
+ */
+public class StringST {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}
+/**
+	每个节点代表一个字母，有R（字母表大小）个子链接。
+	字符和键隐式地保存在数据结构中。
+ */

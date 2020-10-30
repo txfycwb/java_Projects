@@ -1,0 +1,15 @@
+package learnGraph;
+import java.util.*;
+import learnGraph.*;
+/**
+ * 拓扑排序即为dfs的逆后序
+ * @author guo
+ *
+ */
+public class Toplogical {
+
+}
+
+class DepthFirstOrder{
+	
+}

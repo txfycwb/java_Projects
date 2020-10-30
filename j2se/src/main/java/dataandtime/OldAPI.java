@@ -1,0 +1,102 @@
+package dataandtime;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.TimeZone;
+/**
+ * Java标准库有两套处理日期和时间的API：
+ * 一套定义在java.util这个包里面，主要包括Date、Calendar和TimeZone这几个类；
+ * 一套新的API是在Java 8引入的，定义在java.time这个包里面，主要包括LocalDateTime、ZonedDateTime、ZoneId等。
+ * 
+ * “同一个时刻”在计算机中存储的本质上只是一个整数，我们称它为Epoch Time。
+ * 是计算从1970年1月1日零点（格林威治时区／GMT+00:00）到现在所经历的秒数.
+ * 在Java程序中，时间戳通常是用long表示的毫秒数.
+ * 要获取当前时间戳，可以使用System.currentTimeMillis()，这是Java程序获取时间戳最常用的方法。
+ * @author guo
+ *
+ * Date对象有几个严重的问题：它不能转换时区，除了toGMTString()可以按GMT+0:00输出外，Date总是以当前计算机系统的默认时区为基础进行输出。
+ * 此外，我们也很难对日期和时间进行加减，计算两个日期相差多少天，计算某个月第一个星期一的日期等。
+ * Calendar可以用于获取并设置年、月、日、时、分、秒，
+ * 它和Date比，主要多了一个可以做简单的日期和时间运算的功能。
+ * Calendar和Date相比，它提供了时区转换的功能。时区用TimeZone对象表示
+ */
+public class OldAPI {
+
+	public static void main(String[] args) {
+		//date();
+		calendar();
+		timeZone();
+	}
+	
+	//java.util.Date是用于表示一个日期和时间的对象，注意与java.sql.Date区分，后者用在数据库中。
+	static void date() {
+		//获取当前时间
+		Date date = new Date();
+		System.out.println(date.getYear()+1900);//必须加上1900
+		System.out.println(date.getMonth()+1);//0~11,必须加上1
+		System.out.println(date.getDate());//1~31,不能加上1
+		//转换为String
+		System.out.println(date.toString());
+		//转换为GMT时区
+		System.out.println(date.toGMTString());
+		//转换为本地实际
+		System.out.println(date.toLocaleString());
+		/**
+		 * 打印本地时区表示的日期和时间时，不同的计算机可能会有不同的结果。
+		 * 如果我们想要针对用户的偏好精确地控制日期和时间的格式，就可以使用SimpleDateFormat对一个Date进行转换。它用预定义的字符串表示格式化：
+			yyyy：年
+			MM：月
+			dd: 日
+			HH: 小时
+			mm: 分钟
+			ss: 秒
+		 */
+		var sdf = new SimpleDateFormat("yyyy年MM月dd日");
+		System.out.println(sdf.format(date));
+		
+	}
+	
+	static void calendar() {
+		//获取当前时间
+		//利用Calendar.getTime()可以将一个Calendar对象转换成Date对象，
+		//然后就可以用SimpleDateFormat进行格式化了。
+		Calendar c =Calendar.getInstance();
+		int y =c.get(Calendar.YEAR);
+		int m =1+c.get(Calendar.MONTH);
+		int d =c.get(Calendar.DAY_OF_MONTH);
+		int w =c.get(Calendar.DAY_OF_WEEK);
+		int hh =c.get(Calendar.HOUR_OF_DAY);
+		int mm =c.get(Calendar.MINUTE);
+		int ss =c.get(Calendar.SECOND);
+		int ms =c.get(Calendar.MILLISECOND);
+		System.out.println(y + "-" + m + "-" + d + " " + w + " " + hh + ":" + mm + ":" + ss + "." + ms);
+	}
+	
+	static void timeZone() {
+		/**
+		 * 时区的唯一标识是以字符串表示的ID，我们获取指定TimeZone对象也是以这个ID为参数获取，
+		 * GMT+09:00、Asia/Shanghai都是有效的时区ID。
+		 * 要列出系统支持的所有ID，请使用TimeZone.getAvailableIDs()。
+		 * Calendar也可以对日期和时间进行简单的加减：
+		 */
+		TimeZone tzDefault = TimeZone.getDefault();
+		TimeZone tzGMT9 = TimeZone.getTimeZone("GMT+09:00");
+		TimeZone tzNY = TimeZone.getTimeZone("America/New_York");
+		System.out.println(tzDefault.getID());
+		System.out.println(tzGMT9.getID());
+		System.out.println(tzNY.getID());
+		// 当前时间:
+        Calendar c = Calendar.getInstance();
+        // 清除所有:
+        c.clear();
+        // 设置为北京时区:
+        c.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
+        // 设置年月日时分秒:
+        c.set(2019, 10 /* 11月 */, 20, 8, 15, 0);
+        // 显示时间:
+        var sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf.setTimeZone(TimeZone.getTimeZone("America/New_York"));
+        System.out.println(sdf.format(c.getTime()));
+        // 2019-11-19 19:15:00
+	}
+}

@@ -1,0 +1,15 @@
+package learnGraph;
+import learnGraph.*;
+import java.util.*;
+
+/**
+ * 适用于无环加权有向图的sp算法：
+ * 1 可以有负值
+ * 2 线性时间
+ * 3 可以解决相关问题，如 最长路径
+ * @author guo
+ *
+ */
+public class AcyclicSP {
+
+}

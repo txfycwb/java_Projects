@@ -1,0 +1,11 @@
+package learnGraph;
+/**
+ * 解决有环有向图中最短路径问题：
+ * 1 负权重环的检测
+ * 2 负权重环不可达时的单点最短路径问题
+ * @author guo
+ *
+ */
+public class BellmanFordSP {
+
+}

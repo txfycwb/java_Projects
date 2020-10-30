@@ -1,0 +1,82 @@
+package learnGraph;
+import java.util.*;
+import learnGraph.*;
+/**
+ * 拓扑排序即为dfs的逆后序
+ * @author guo
+ * reversePost返回方法有问题。
+ */
+public class Toplogical {
+	private Iterable<Integer> order;
+
+	public Toplogical(DirectedGraph g) {
+		super();
+		DirectedCycle cycle = new DirectedCycle(g);
+		if(!cycle.hasCycle()) {
+			DepthFirstOrder dfs = new DepthFirstOrder(g);
+			order = dfs.reversePost();
+		}
+	}
+	
+	public Iterable<Integer> order(){
+		return order;
+	}
+	
+	public boolean isDAG(){
+		return order != null;
+	}
+	
+	public static void main(String[] args) {
+		DirectedGraph g =new DirectedGraph(13);
+		int[][] graph = new int[][] {
+			{0,1},{0,5},{0,6},{2,0},{2,3},{3,5},{5,4},{6,4},{8,7},{7,6},{6,9},{9,10},{9,11},{9,12},{11,12},
+		};
+		for(int[] t1:graph)
+			g.addEdge(t1[0], t1[1]);
+		System.out.print(g.toString());
+//		DepthFirstSearch dfs =new DepthFirstSearch(g, 0);
+//		System.out.print(dfs.count()+"*****"+dfs.marked(10));
+		Stack<Integer> s = (Stack<Integer>) new Toplogical(g).order();
+		while(!s.empty())
+			System.out.print(s.pop()+"->");
+	}
+}
+
+class DepthFirstOrder{
+	private boolean[] marked;
+	private Queue<Integer> pre;
+	private Queue<Integer> post;
+	private Stack<Integer> reversePost;
+	
+	public DepthFirstOrder(DirectedGraph g) {
+		super();
+		this.pre = new LinkedList<Integer>();
+		this.post = new LinkedList<Integer>();
+		this.reversePost = new Stack<Integer>();
+		marked = new boolean[g.V()];
+		for(int i=0;i<g.V();i++)
+			dfs(g, i);
+	}
+	
+	private void dfs(DirectedGraph g, int i) {
+		pre.offer(i);
+		marked[i] = true;
+		for(int d:g.iterator(i)) {
+			if(!marked[d]) {
+				dfs(g, d);
+			}
+		}
+		post.offer(i);
+		reversePost.push(i);
+	}
+	
+	public Iterable<Integer> pre(){
+		return pre;
+	}
+	public Iterable<Integer> post(){
+		return post;
+	}
+	public Iterable<Integer> reversePost(){
+		return reversePost;
+	}
+}

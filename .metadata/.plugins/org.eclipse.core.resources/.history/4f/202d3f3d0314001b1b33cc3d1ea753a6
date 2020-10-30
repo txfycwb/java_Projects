@@ -1,0 +1,4 @@
+module learningAlgorithm {
+	requires org.junit.jupiter.api;
+	requires edu.princeton.cs.algs4;
+}

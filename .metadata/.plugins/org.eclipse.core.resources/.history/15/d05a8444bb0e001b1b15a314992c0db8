@@ -1,0 +1,14 @@
+package learnGraph;
+import java.util.*;
+/**
+ * 寻找有向环
+ * @author guo
+ *
+ */
+public class DirectedCycle {
+	private boolean[] marked;
+	private int[] from;
+	private Stack<Integer> stack;
+	private boolean[] onStack;
+	
+}

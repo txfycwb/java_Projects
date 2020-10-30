@@ -1,0 +1,15 @@
+package learnString;
+
+/**
+ * 单词查找树
+ * @author guo
+ *
+ */
+public class StringST {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

@@ -1,0 +1,49 @@
+package learnGraph;
+import learnGraph.*;
+import java.util.*;
+/**
+ * 解决有环有向图中最短路径问题：
+ * 1 负权重环的检测
+ * 2 负权重环不可达时的单点最短路径问题
+ * @author guo
+ *	时间EV，空间V
+ * 基本原理：（归纳法证明）初始化distTo[s]=0,其余为正无穷，每一轮放松所有边，重复V轮
+ * 改进：只有上一轮distTo改进的顶点指出的边才能改变其它distTo的值，故用队列保存该值。
+ */
+public class BellmanFordSP {
+	private double[] distTo;
+	private boolean[] onQ;//避免将顶点重复加入队列
+	private Queue<Integer> q;
+	private DiEdge[] edgeTo;
+	private int cost;//relax()的调用次数
+	private Iterable<Integer> cycle;
+	
+	
+	public BellmanFordSP(EdgeWeightedDiGraph g,int s) {
+		super();
+		this.distTo = new double[g.V()];
+		this.onQ = new boolean[g.V()];
+		this.q = new LinkedList<Integer>();
+		this.edgeTo = new DiEdge[g.V()];
+		this.cost = 0;
+	}
+
+	private void relax(EdgeWeightedDiGraph g, int v) {
+		for(DiEdge e:g.iterator(v)) {
+			int to = e.to();
+			if(distTo[to]<distTo[v]+e.getWeight()) {
+				if(!onQ[to]) {
+					q.add(to);
+					onQ[to] = true;
+				}
+				distTo[to]=distTo[v]+e.getWeight();
+				edgeTo[to]=e;
+			}
+			if(cost++%g.V()==0) findNegativeCycle();
+		}
+	}
+
+	private void findNegativeCycle() {
+		
+	}
+}

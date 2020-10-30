@@ -1,0 +1,12 @@
+package jdbc;
+import java.sql.*;
+
+/**
+ * 为了避免频繁地创建和销毁JDBC连接，我们可以通过连接池（Connection Pool）复用已经创建好的连接。
+ * DBC连接池有一个标准的接口javax.sql.DataSource，注意这个类位于Java标准库中，但仅仅是接口。
+ * @author guo
+ *
+ */
+public class TsetCP {
+
+}

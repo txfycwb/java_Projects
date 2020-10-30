@@ -1,0 +1,57 @@
+package learnGraph;
+
+import java.util.Arrays;
+import java.util.Deque;
+import java.util.LinkedList;
+import java.util.PriorityQueue;
+import learnGraph.*;
+import java.util.stream.*;
+/**
+ * 适用于无负值的加权有向图：最短路径
+ * 
+ */
+public class DijkstraSp {
+	private PriorityQueue<Integer> pq;
+	private double[] distTo;
+	private DiEdge[] edgeTo;
+	
+	public DijkstraSp(EdgeWeightedDiGraph g,int s) {
+		distTo = new double[g.V()];
+		edgeTo = new DiEdge[g.V()];
+		pq = new PriorityQueue<>((a,b)-> Double.compare(distTo[a], distTo[b]));
+		for(int i=0;i<g.V();i++)
+			distTo[i] = Double.POSITIVE_INFINITY;
+		pq.add(s);
+		while(!pq.isEmpty())
+			relax(g, pq.remove());
+	}
+	
+	private void relax(EdgeWeightedDiGraph g, int s) {
+		for(DiEdge e:g.iterator(s)) {
+			int to = e.to();
+			if(distTo[to]>distTo[s]+e.getWeight()) {
+				distTo[to] = distTo[s]+e.getWeight();
+				edgeTo[to] = e;
+				if(pq.contains(to)) {
+					pq.remove(to);
+				}
+				pq.add(to);
+			}
+		}
+	}
+	
+	public double distTo(int v) {
+		return distTo[v];
+	}
+	
+	public boolean hasPathTo(int v) {
+		return distTo[v]<Double.POSITIVE_INFINITY;
+	}
+	
+	public Iteralbe<Integer> pathTo(int v){
+		Deque<Integer> q = new LinkedList<>();
+		if(!hasPathTo(v)) return null;
+		for(;v!=edgeTo[v].from();v=edgeTo[v].from())
+			q.addFirst(v);
+	}
+}

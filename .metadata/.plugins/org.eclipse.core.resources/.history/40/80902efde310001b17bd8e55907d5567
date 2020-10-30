@@ -1,0 +1,9 @@
+package learnGraph;
+/**
+ * 将所有边升序排列，每次加入最小边，保证在子树中不生成环，直到树中有V-1条边。
+ * @author guo
+ *
+ */
+public class KruskalMST {
+
+}

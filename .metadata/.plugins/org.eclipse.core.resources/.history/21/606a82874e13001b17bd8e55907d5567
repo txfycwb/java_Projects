@@ -1,0 +1,90 @@
+package learnGraph;
+import java.util.*;
+import learnGraph.*;
+/**
+ * prime算法的延迟实现ElogE、即时实现ElogV:
+ * 即什么时候删除优先队列中的失效边
+ * @author guo
+ * 即时实现：考虑优先队列中存在多个到达同一不在mst中的点的边，可以减少边，从而降低堆排序时间。
+ * 用索引优先队列实现
+ */
+
+public class LazyPrimeMST {
+	private boolean[] marked;
+	private PriorityQueue<Edge> pq;
+	private LinkedList<Edge> mst;
+	public LazyPrimeMST(EdgeWeightedGraph g) {
+		super();
+		this.marked = new boolean[g.V()];
+		this.pq = new PriorityQueue<>();
+		this.mst = new LinkedList<>();
+		//默认是连通图
+		visit(0, g);
+		while(!pq.isEmpty()) {
+			Edge min = pq.remove();
+			int v = min.either();int w = min.other(v);
+			if(marked[v]&&marked[w]) continue;
+			mst.add(min);
+			if(marked[v]) {
+				visit(w, g);
+			}else {
+				visit(v, g);
+			}
+		}
+	}
+	
+	private void visit(int v, EdgeWeightedGraph g) {
+		marked[v] = true;
+		for(Edge e:g.iterator(v)) {
+			if(!marked[e.other(v)])
+				pq.add(e);
+		}
+	}
+	
+	public Iterable<Edge> iterator(){
+		return mst;
+	}
+	
+}
+//不正规，要用索引队列来做
+class PrimeMST{
+	private Edge[] edgeTo;//距离树最近的边
+	private double[] distTo;//最近边距离
+	private PriorityQueue<Integer> pq;
+	
+	public PrimeMST(EdgeWeightedGraph g) {
+		super();
+		this.edgeTo = new Edge[g.V()];
+		this.distTo = new double[g.V()];
+		for(int i=0;i<g.V();i++)
+			distTo[i] = Double.POSITIVE_INFINITY;
+		this.pq = new PriorityQueue<Integer>((a,b)->edgeTo[a].compareTo(edgeTo[b]));
+		edgeTo[0] = null;
+		visit(g, 0);
+		while(pq.size()!=0)
+			visit(g,pq.remove());
+	}
+	private void visit(EdgeWeightedGraph g, int to) {
+		distTo[to] = 0.0;
+		for(Edge e:g.iterator(to)) {
+			int next = e.other(to);
+			if(distTo[next]==0.0) continue;
+			if(e.getWeight()<distTo[next]) {
+				distTo[next]=e.getWeight();
+				edgeTo[next]=e;
+				if(pq.contains(next)) {
+					pq.remove(next);
+				}
+				pq.add(next);
+			}
+		}
+		
+	}
+	
+	public Iterable<Edge> iterator(){
+		List<Edge> mst = Arrays.asList(Arrays.copyOfRange(edgeTo, 1, edgeTo.length));
+		return mst;
+	}
+	
+	
+}

@@ -1,0 +1,11 @@
+package learnSearch;
+import java.util.*;
+
+/**
+ * 实现B树，成本模型为页的访问次数。
+ * @author guo
+ *
+ */
+public class BTree {
+
+}
